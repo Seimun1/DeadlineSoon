@@ -1,6 +1,4 @@
 package ru.netology.test;
-
-import dev.failsafe.internal.util.Assert;
 import org.junit.jupiter.api.*;
 import ru.netology.page.LoginPage;
 
@@ -17,10 +15,10 @@ public class BankLoginTest {
         cleanAuth_code();
     }
 
-//    @AfterAll
-//    static void cleanAll() {
-//        cleanDatabase();
-//    }
+    @AfterAll
+    static void cleanAll() {
+        cleanDatabase();
+    }
 
     @BeforeEach
     void setUp() {
