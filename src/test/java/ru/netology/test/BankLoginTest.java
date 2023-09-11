@@ -1,9 +1,10 @@
 package ru.netology.test;
 
+import dev.failsafe.internal.util.Assert;
 import org.junit.jupiter.api.*;
 import ru.netology.page.LoginPage;
 
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static ru.netology.data.DataGenerator.*;
 import static ru.netology.data.SQLHelper.*;
 
@@ -16,10 +17,10 @@ public class BankLoginTest {
         cleanAuth_code();
     }
 
-    @AfterAll
-    static void cleanAll() {
-        cleanDatabase();
-    }
+//    @AfterAll
+//    static void cleanAll() {
+//        cleanDatabase();
+//    }
 
     @BeforeEach
     void setUp() {
@@ -61,6 +62,19 @@ public class BankLoginTest {
         var verificationPage = loginPage.validLogin(getAuthData());
         verificationPage.verify(generateCode());
         verificationPage.findErrorMessage("Неверно указан код!");
+    }
+
+    @Test
+    @DisplayName("Should blocked user when invalid password more 3 times enter")
+    void shouldBlockedWhenInvalidPasswordEnterMoreTimes() {
+        for (int i = 0; i < 3; i++) {
+            refresh();
+            loginPage.validLogin(new AuthData(testName, generatePassword()));
+            loginPage.findErrorMessage("Неверно указан логин или пароль");
+        }
+        String expected = "blocked";
+        String actual = getStatus();
+        Assertions.assertEquals(expected, actual);
     }
 
 }

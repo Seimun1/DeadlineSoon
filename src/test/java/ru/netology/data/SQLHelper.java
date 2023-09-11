@@ -36,4 +36,10 @@ public class SQLHelper {
     public static void cleanAuth_code() {
         runner.execute(getConn(), "DELETE FROM auth_codes");
     }
+
+    @SneakyThrows
+    public static String getStatus() {
+        var status = "SELECT status FROM users WHERE login = 'vasya'";
+        return runner.query(getConn(), status, new ScalarHandler<String>());
+    }
 }
