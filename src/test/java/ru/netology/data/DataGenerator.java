@@ -20,7 +20,6 @@ public class DataGenerator {
     }
 
     public static AuthData getAuthData() {
-//        return new AuthData("vasya", "qwerty123");
         return new AuthData(testName, testPassword);
     }
 
